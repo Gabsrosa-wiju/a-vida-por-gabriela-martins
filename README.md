@@ -1,1 +1,779 @@
-index.html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A vida por Gabriela Martins</title>
+  <meta name="description" content="Um portal de capítulos, cartas, teorias e universos literários por Gabriela Martins." />
+  <style>
+    :root {
+      --bg: #09070d;
+      --bg-soft: #130f19;
+      --card: rgba(255, 255, 255, 0.06);
+      --card-strong: rgba(255, 255, 255, 0.10);
+      --text: #f5ecff;
+      --muted: #cbbddc;
+      --gold: #f1c98a;
+      --rose: #e8a8d7;
+      --violet: #8d6bff;
+      --line: rgba(255, 255, 255, 0.11);
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+      --radius: 24px;
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top, rgba(141, 107, 255, 0.18), transparent 25%),
+        radial-gradient(circle at 80% 20%, rgba(232, 168, 215, 0.14), transparent 18%),
+        radial-gradient(circle at 50% 120%, rgba(241, 201, 138, 0.12), transparent 30%),
+        linear-gradient(180deg, #08060b 0%, #0c0910 40%, #120d16 100%);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.35;
+      background-image:
+        radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 120px 90px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1.5px 1.5px at 220px 160px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(2px 2px at 340px 60px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1px 1px at 500px 120px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1.5px 1.5px at 720px 70px, rgba(255,255,255,0.6), transparent);
+      background-size: 800px 300px;
+      animation: drift 35s linear infinite;
+    }
+
+    @keyframes drift {
+      from { transform: translateY(0); }
+      to { transform: translateY(-120px); }
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(12px);
+      background: rgba(8, 6, 11, 0.68);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      min-height: 74px;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .brand small {
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-size: 0.68rem;
+    }
+
+    .brand strong {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .menu {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .menu a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-size: 0.95rem;
+      transition: 0.25s;
+    }
+
+    .menu a:hover {
+      background: rgba(255,255,255,0.10);
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    .hero {
+      position: relative;
+      padding: 90px 0 70px;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid rgba(241, 201, 138, 0.22);
+      color: var(--gold);
+      background: rgba(241, 201, 138, 0.08);
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 6vw, 5.1rem);
+      line-height: 0.98;
+      margin: 0 0 18px;
+      text-wrap: balance;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 700px;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 20px;
+      border-radius: 16px;
+      font-weight: 700;
+      border: 1px solid var(--line);
+      transition: 0.25s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), #ffdca8);
+      color: #2a1b06;
+      box-shadow: var(--shadow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px) scale(1.01);
+    }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.10);
+      transform: translateY(-2px);
+    }
+
+    .hero-card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      border-radius: 30px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: auto -50px -70px auto;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(141,107,255,0.35), transparent 70%);
+    }
+
+    .hero-card h3 {
+      margin-top: 0;
+      font-size: 1.6rem;
+    }
+
+    .hero-card p {
+      margin-bottom: 16px;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .stat {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      background: rgba(255,255,255,0.04);
+      text-align: center;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.6rem;
+      color: var(--gold);
+    }
+
+    .section {
+      padding: 28px 0 18px;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+    }
+
+    .section-title p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 650px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .book {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .book-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.05);
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    .book h3, .chapter h3, .letter h3, .theory h3 {
+      margin: 0;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .book p, .chapter p, .letter p, .theory p {
+      margin: 0;
+    }
+
+    .chapter-list,
+    .letter-list,
+    .theory-list,
+    .community-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .chapter small,
+    .letter small,
+    .theory small {
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.72rem;
+    }
+
+    .profile {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .portrait {
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px dashed rgba(255,255,255,0.16);
+      min-height: 420px;
+      background:
+        radial-gradient(circle at top, rgba(232,168,215,0.18), transparent 30%),
+        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .portrait span {
+      font-size: 4rem;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .tag {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .quote {
+      font-size: 1.2rem;
+      color: #f7dff4;
+      font-style: italic;
+      border-left: 3px solid rgba(241, 201, 138, 0.35);
+      padding-left: 14px;
+      margin-top: 22px;
+    }
+
+    footer {
+      padding: 40px 0 60px;
+      color: var(--muted);
+    }
+
+    .footer-card {
+      text-align: center;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 28px;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .grid-2,
+      .grid-3,
+      .profile {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      .hero {
+        padding-top: 56px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        width: min(var(--max), calc(100% - 22px));
+      }
+
+      .nav {
+        padding: 10px 0;
+      }
+
+      .menu {
+        display: none;
+      }
+
+      .hero-card,
+      .card,
+      .footer-card {
+        padding: 18px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .portrait {
+        min-height: 320px;
+      }
+
+      h1 {
+        letter-spacing: -0.03em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <small>portal literário</small>
+        <strong>A vida por Gabriela Martins</strong>
+      </div>
+
+      <nav class="menu">
+        <a href="#inicio">Início</a>
+        <a href="#livros">Livros</a>
+        <a href="#capitulos">Capítulos</a>
+        <a href="#cartas">Cartas</a>
+        <a href="#teorias">Teorias</a>
+        <a href="#perfil">Perfil</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">✦ romance • mistério • fantasia • destino</div>
+          <h1>Histórias para quem gosta de se perder bonito.</h1>
+          <p>
+            Bem-vinda a um universo de capítulos em febre lenta, cartas que chegam como presságios
+            e teorias que crescem na madrugada. Aqui, cada história é uma porta entreaberta
+            e cada leitor entra sabendo que talvez não saia o mesmo.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#capitulos">Ler capítulos</a>
+            <a class="btn btn-ghost" href="#teorias">Abrir mural de teorias</a>
+            <a class="btn btn-ghost" href="#perfil">Conhecer a autora</a>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <small class="badge">capítulo em destaque</small>
+          <h3>A Árvore que Sonhava</h3>
+          <p>
+            Naquela noite, o vento parecia guardar nomes antigos no bolso,
+            como se a ilha inteira soubesse do reencontro antes deles.
+          </p>
+
+          <div class="stats">
+            <div class="stat">
+              <strong>14</strong>
+              <span>capítulos</span>
+            </div>
+            <div class="stat">
+              <strong>247</strong>
+              <span>cartas</span>
+            </div>
+            <div class="stat">
+              <strong>89</strong>
+              <span>teorias</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="livros">
+      <div class="container">
+        <div class="section-title">
+          <div>
+            <h2>Livros que respiram dentro da noite</h2>
+            <p>
+              Cada obra vive como um pequeno feitiço de longa duração. Escolha uma porta e atravesse.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="card book">
+            <div class="book-top">
+              <h3>Entre Marés e Destinos</h3>
+              <span class="badge">em andamento</span>
+            </div>
+            <p class="muted">Romance • Fantasia • Drama</p>
+            <p>
+              Fios dourados, sonhos antigos e uma árvore que talvez saiba mais sobre o amor do que os próprios amantes.
+            </p>
+          </article>
+
+          <article class="card book">
+            <div class="book-top">
+              <h3>Festival de Yndara</h3>
+              <span class="badge">mistério aceso</span>
+            </div>
+            <p class="muted">Mistério • Romance • Realismo mágico</p>
+            <p>
+              Uma vila em festa, rituais antigos, perfumes que perseguem e um destino rondando o teatro.
+            </p>
+          </article>
+
+          <article class="card book">
+            <div class="book-top">
+              <h3>Viridara</h3>
+              <span class="badge">profecia viva</span>
+            </div>
+            <p class="muted">Fantasia • Tensão romântica</p>
+            <p>
+              Águas sagradas, anciãs, maldições e um amor que ousa respirar diante do impossível.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="capitulos">
+      <div class="container grid-2">
+        <div class="card">
+          <div class="section-title">
+            <div>
+              <h2>Capítulos recentes</h2>
+              <p>As portas mais novas do labirinto.</p>
+            </div>
+          </div>
+
+          <div class="chapter-list">
+            <article class="chapter">
+              <small>Entre Marés e Destinos</small>
+              <h3>Capítulo 12 • A Árvore que Sonhava</h3>
+              <p class="muted">Publicado recentemente</p>
+              <p>
+                O reencontro se aproxima como tempestade contida, e a ilha parece ouvir antes de todos.
+              </p>
+            </article>
+
+            <article class="chapter">
+              <small>Festival de Yndara</small>
+              <h3>Capítulo 4 • O Teatro das Sombras</h3>
+              <p class="muted">Publicado recentemente</p>
+              <p>
+                Quando a cortina subiu, não foi apenas a peça que começou. Algo mais antigo abriu os olhos.
+              </p>
+            </article>
+
+            <article class="chapter">
+              <small>Viridara</small>
+              <h3>Capítulo 9 • O Nome Enterrado na Água</h3>
+              <p class="muted">Publicado recentemente</p>
+              <p>
+                Certos nomes não desaparecem. Apenas esperam o momento exato de voltar à superfície.
+              </p>
+            </article>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">
+            <div>
+              <h2>Comunidades</h2>
+              <p>Lugares onde os leitores não só leem. Eles conspiram.</p>
+            </div>
+          </div>
+
+          <div class="community-list">
+            <article>
+              <h3>Leitores da Lua Alta</h3>
+              <p class="muted">Para quem lê de madrugada e marca frases como quem recolhe relíquias.</p>
+            </article>
+
+            <article>
+              <h3>Teorias & Presságios</h3>
+              <p class="muted">Onde pistas, surtos e previsões se encontram com o caos mais elegante.</p>
+            </article>
+
+            <article>
+              <h3>Cartas de Coração Aberto</h3>
+              <p class="muted">Mensagens, confissões, reações e pequenos colapsos emocionais autorizados.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="cartas">
+      <div class="container grid-2">
+        <div class="card">
+          <div class="section-title">
+            <div>
+              <h2>Cartas dos leitores</h2>
+              <p>Bilhetes deixados na janela da narrativa.</p>
+            </div>
+          </div>
+
+          <div class="letter-list">
+            <article class="letter">
+              <small>carta da semana</small>
+              <h3>“Li um capítulo e perdi a hora da vida.”</h3>
+              <p>
+                Suas histórias têm um tipo raro de vertigem. A pessoa entra por curiosidade e, quando percebe,
+                já está criando teoria no banho e defendendo personagem como se fosse parente.
+              </p>
+            </article>
+
+            <article class="letter">
+              <small>leitura em destaque</small>
+              <h3>“Existe perfume nas suas cenas.”</h3>
+              <p>
+                Tem texto que se lê. O seu se atravessa. Fica um resto de mar, de calor, de jasmim, de presságio.
+              </p>
+            </article>
+          </div>
+        </div>
+
+        <div class="card" id="teorias">
+          <div class="section-title">
+            <div>
+              <h2>Teorias em alta</h2>
+              <p>Algumas são delírio. Outras talvez sejam aviso.</p>
+            </div>
+          </div>
+
+          <div class="theory-list">
+            <article class="theory">
+              <small>teoria 01</small>
+              <h3>A árvore não mostra o futuro.</h3>
+              <p>Ela acorda lembranças de algo que ainda não aconteceu.</p>
+            </article>
+
+            <article class="theory">
+              <small>teoria 02</small>
+              <h3>Morvahar é a pergunta errada.</h3>
+              <p>A verdadeira resposta talvez esteja escondida no sangue de quem ninguém observa.</p>
+            </article>
+
+            <article class="theory">
+              <small>teoria 03</small>
+              <h3>O silêncio também é uma entidade.</h3>
+              <p>Em algumas histórias, o que não foi dito é o personagem mais perigoso de todos.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="perfil">
+      <div class="container">
+        <div class="card profile">
+          <div class="portrait">
+            <div>
+              <span>🎨</span>
+              <strong>Espaço para sua caricatura</strong>
+              <p>
+                Depois, podemos trocar este espaço por uma imagem sua em estilo místico, romântico ou cinematográfico.
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <small class="badge">perfil da autora</small>
+            <h2>Gabriela Martins</h2>
+            <p class="muted">
+              Escritora de romances, fantasias, mistérios e emoções que se movem como maré cheia.
+            </p>
+
+            <p>
+              Em <strong>A vida por Gabriela Martins</strong>, cada capítulo é pensado como um convite
+              à suspensão. Um lugar onde o leitor encontra desejo, destino, simbolismo, sombra,
+              perfume, sonho e personagens que deixam marcas longas. Este não é apenas um site.
+              É um altar de histórias em movimento.
+            </p>
+
+            <div class="tags">
+              <span class="tag">romance poético</span>
+              <span class="tag">fantasia cinematográfica</span>
+              <span class="tag">mistério emocional</span>
+              <span class="tag">cartas & teorias</span>
+            </div>
+
+            <p class="quote">
+              “Algumas histórias não pedem leitura. Pedem rendição.”
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-card">
+        <h3 style="margin-top:0;">A vida por Gabriela Martins</h3>
+        <p>
+          Um portal para leitoras que gostam de amar personagens, desconfiar de símbolos
+          e passar horas presas em capítulos como quem caiu num feitiço bem escrito.
+        </p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
